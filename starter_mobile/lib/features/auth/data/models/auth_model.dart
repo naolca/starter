@@ -1,6 +1,6 @@
 // auth model class that extends auth entity
 
-import 'package:starter_mobile/features/auth/model/entities/auth_entity.dart';
+import 'package:starter_mobile/features/auth/domain/entities/auth_entity.dart';
 
 class AuthModel extends AuthEntity {
   AuthModel({
