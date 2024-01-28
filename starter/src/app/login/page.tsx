@@ -4,7 +4,7 @@ import { useLoginMutation } from "../../redux/slices/auth_slice";
 import { useEffect } from "react";
 import { useRouter } from 'next/navigation';
 import { root } from "postcss";
-import { Router } from "next/router";
+
 
 export default function Login (){
 
