@@ -1,0 +1,1 @@
+// equatable user entity class with 
