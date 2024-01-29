@@ -16,6 +16,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   void _handleLoginRequest(LoginRequest event, Emitter<LoginState> emit) {
     emit(LoginLoading());
+    print("the data");
+    print(event.authEntity);
     final result = loginUser.loginUser(event.authEntity);
     result.then((value) {
       value.fold((l) {
