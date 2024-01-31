@@ -13,16 +13,18 @@ abstract class AuthRemoteDataSource {
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   @override
   Future<LoginResultModel> loginUser(AuthModel authModel) async {
+    print("the data in remote");
     final url = Uri.parse(
         'https://a2sv-backend.onrender.com/api/auth/login'); //Repclace Your Endpoint
     final headers = {'Content-Type': 'application/json'};
-    final body = jsonEncode({authModel.toJson()});
+    final body =
+        jsonEncode({"email": authModel.email, "password": authModel.password});
 
     final response = await http.post(url, headers: headers, body: body);
 
     if (response.statusCode == 200) {
       final LoginResultModel loginResultModel =
-          LoginResultModel.fromJson(jsonDecode(response.body));
+          LoginResultModel.fromJson(json.decode(response.body));
       return loginResultModel;
     } else {
       throw Exception('Failed to load album');

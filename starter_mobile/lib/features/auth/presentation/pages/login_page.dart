@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:starter_mobile/features/auth/domain/entities/auth_entity.dart';
 import 'package:starter_mobile/features/auth/presentation/bloc/bloc/login_bloc.dart';
+import 'package:starter_mobile/features/auth/presentation/pages/home_page.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
@@ -49,6 +50,13 @@ class LoginPage extends StatelessWidget {
                         ),
                       );
                     } else if (state is LoginSuccess) {
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => HomePage(),
+                            ));
+                      });
                       return const Text('Login Success');
                     } else if (state is LoginFailure) {
                       return const Text('Login Failure');

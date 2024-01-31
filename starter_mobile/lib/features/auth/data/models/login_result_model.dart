@@ -20,7 +20,7 @@ class LoginResultModel extends LoginResultEntity {
   factory LoginResultModel.fromJson(Map<String, dynamic> json) {
     return LoginResultModel(
       user: json['user'],
-      username: json['username'],
+      username: json['userName'],
       userRole: json['userRole'],
       userEmail: json['userEmail'],
       userProfile: json['userProfile'],

@@ -9,6 +9,7 @@ class LoginUser {
   LoginUser(this.authRepository);
 
   Future<Either<Failure, LoginResultEntity>> loginUser(authEntity) async {
+    print("the data in usecase");
     return await authRepository.loginUser(authEntity);
   }
 }
