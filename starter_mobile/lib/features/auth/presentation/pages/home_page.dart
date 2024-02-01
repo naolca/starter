@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:starter_mobile/features/teamMembers/presentation/pages/team_members_page.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
@@ -8,9 +9,6 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
-    final bool isLargeScreen = width > 800;
-
     return Theme(
       data: ThemeData.light(),
       child: Scaffold(
@@ -19,13 +17,11 @@ class HomePage extends StatelessWidget {
           backgroundColor: Colors.white,
           elevation: 0,
           titleSpacing: 0,
-          leading: isLargeScreen
-              ? null
-              : IconButton(
-                  color: Colors.blue,
-                  icon: const Icon(Icons.menu),
-                  onPressed: () => _scaffoldKey.currentState?.openDrawer(),
-                ),
+          leading: IconButton(
+            color: Colors.blue,
+            icon: const Icon(Icons.menu),
+            onPressed: () => _scaffoldKey.currentState?.openDrawer(),
+          ),
           title: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Row(
@@ -41,7 +37,6 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                 ),
-                if (isLargeScreen) Expanded(child: _navBarItems())
               ],
             ),
           ),
@@ -52,7 +47,25 @@ class HomePage extends StatelessWidget {
             )
           ],
         ),
-        drawer: isLargeScreen ? null : _drawer(),
+        drawer: Drawer(
+          child: ListView(
+            children: _menuItems
+                .map((item) => ListTile(
+                      onTap: () {
+                        WidgetsBinding.instance.addPostFrameCallback((_) {
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => item['page'] as Widget,
+                              ));
+                        });
+                        _scaffoldKey.currentState?.openEndDrawer();
+                      },
+                      title: Text(item['path'] as String),
+                    ))
+                .toList(),
+          ),
+        ),
         body: const Center(
           child: Text(
             "Body",
@@ -69,7 +82,7 @@ class HomePage extends StatelessWidget {
                     onTap: () {
                       _scaffoldKey.currentState?.openEndDrawer();
                     },
-                    title: Text(item),
+                    title: Text(item['path'] as String),
                   ))
               .toList(),
         ),
@@ -86,7 +99,7 @@ class HomePage extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(
                       vertical: 24.0, horizontal: 16),
                   child: Text(
-                    item,
+                    item['path'] as String,
                     style: const TextStyle(fontSize: 18),
                   ),
                 ),
@@ -96,11 +109,12 @@ class HomePage extends StatelessWidget {
       );
 }
 
-final List<String> _menuItems = <String>[
-  'About',
-  'Blogs',
-  'Teams',
-  'Stories',
+final List<Map<String, dynamic>> _menuItems = <Map<String, dynamic>>[
+  {'path': 'About', 'page': HomePage()},
+  {'path': 'Success Stories', 'page': TeamMembersPage()},
+  {'path': 'Blogs', 'page': HomePage()},
+  {'path': 'Teams', 'page': TeamMembersPage()},
+  {'path': 'Stories', 'page': HomePage()}
 ];
 
 enum Menu { itemOne, itemTwo, itemThree }
@@ -113,7 +127,21 @@ class _ProfileIcon extends StatelessWidget {
     return PopupMenuButton<Menu>(
         icon: const Icon(Icons.person),
         offset: const Offset(0, 40),
-        onSelected: (Menu item) {},
+        onSelected: (Menu item) {
+          // switched statement
+          print('selected');
+          switch (item) {
+            case Menu.itemOne:
+              print('Account');
+              break;
+            case Menu.itemTwo:
+              print('Settings');
+              break;
+            case Menu.itemThree:
+              print('Sign Out');
+              break;
+          }
+        },
         itemBuilder: (BuildContext context) => <PopupMenuEntry<Menu>>[
               const PopupMenuItem<Menu>(
                 value: Menu.itemOne,

@@ -16,8 +16,11 @@ class TeamMembersRepositoryImpl implements TeamMembersRepository {
   Future<Either<Failure, List<TeamMemberEntity>>> getTeamMembers() async {
     try {
       final teamMembers = await teamMembersRemoteSource.getTeamMembers();
+      print("inside repository");
+      print(teamMembers);
       return Right(teamMembers);
-    } on Exception {
+    } catch (e) {
+      print(e);
       return Left(ServerFailure());
     }
   }

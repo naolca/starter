@@ -15,10 +15,9 @@ class SocialMediaModel extends SocialMediaEntity {
 
   factory SocialMediaModel.fromJson(Map<String, dynamic> json) {
     return SocialMediaModel(
-      linkedIn: json['linkedIn'],
-      facebook: json['facebook'],
-      instagram: json['instagram'],
-    );
+        linkedIn: json['linkedin'],
+        facebook: json['facebook'],
+        instagram: json['instagram']);
   }
 
   Map<String, dynamic> toJson() {

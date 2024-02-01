@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:starter_mobile/features/auth/presentation/bloc/bloc/login_bloc.dart';
+import 'package:starter_mobile/features/auth/presentation/pages/home_page.dart';
 import 'package:starter_mobile/features/auth/presentation/pages/login_page.dart';
+import 'package:starter_mobile/features/teamMembers/presentation/bloc/bloc/team_members_bloc.dart';
 import 'package:starter_mobile/injection_container.dart' as di;
 import 'package:starter_mobile/injection_container.dart';
 
@@ -24,10 +26,17 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: BlocProvider(
-          create: (_) => sl<LoginBloc>(), child: LoginPage(key: UniqueKey())
-          // child: LoginPage(key: UniqueKey()),
+      home: MultiBlocProvider(
+        providers: [
+          BlocProvider<LoginBloc>(
+            create: (context) => sl<LoginBloc>(),
           ),
+          BlocProvider<TeamMembersBloc>(
+            create: (context) => sl<TeamMembersBloc>(),
+          ),
+        ],
+        child: HomePage(key: UniqueKey()),
+      ),
     );
   }
 }

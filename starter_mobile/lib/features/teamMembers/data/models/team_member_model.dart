@@ -22,7 +22,7 @@ class TeamMemberModel extends TeamMemberEntity {
   factory TeamMemberModel.fromJson(Map<String, dynamic> json) {
     return TeamMemberModel(
       socialMedia: SocialMediaModel.fromJson(json['socialMedia']),
-      id: json['id'],
+      id: json['_id'],
       name: json['name'],
       bio: json['bio'],
       department: json['department'],
